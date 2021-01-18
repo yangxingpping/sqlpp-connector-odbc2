@@ -48,11 +48,17 @@ int main()
         const auto tab = hhhhh::TabBar();
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
+		//select all
         for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally()))
         {
             std::cerr << "row.alpha: " << row.alpha << ", row.beta: " << row.beta << ", row.gamma: " << row.gamma << std::endl;
         }
 
+		//select some fields
+		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally()))
+		{
+			std::cerr << "row.alpha: " << row.left.alpha << ", row.beta: " << row.left.beta << std::endl;
+		}
         
 	}
 	catch(const sqlpp::exception& )
