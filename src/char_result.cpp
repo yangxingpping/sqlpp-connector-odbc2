@@ -67,7 +67,7 @@ namespace sqlpp
         void char_result_t::_bind_integral_result(size_t index, int64_t* value, bool* is_null)
         {
 			assert(value && is_null);
-            int i = 0;
+            OTL_BIGINT i;
             *(_handle->skeleton_res) >> i;
             *value = i;
             *is_null = _handle->skeleton_res->is_null();

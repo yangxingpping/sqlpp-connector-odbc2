@@ -24,7 +24,7 @@ namespace hhhhh
             const T& operator()() const { return alpha; }
           };
       };
-      using _traits = sqlpp::make_traits<sqlpp::integer, sqlpp::tag::can_be_null>;
+      using _traits = sqlpp::make_traits<sqlpp::bigint, sqlpp::tag::can_be_null>;
     };
     struct Beta
     {
