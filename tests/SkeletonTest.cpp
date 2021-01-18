@@ -55,13 +55,13 @@ int main()
         }
 
 		//select all
-        for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally()))
+        for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
         {
             std::cerr << "row.alpha: " << row.alpha << ", row.beta: " << row.beta << ", row.gamma: " << row.gamma << std::endl;
         }
 
 		//select some fields
-		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally()))
+		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
 		{
 			std::cerr << "row.alpha: " << row.left.alpha << ", row.beta: " << row.left.beta << std::endl;
 		}
