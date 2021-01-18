@@ -67,8 +67,9 @@ namespace sqlpp
         void char_result_t::_bind_integral_result(size_t index, int64_t* value, bool* is_null)
         {
 			assert(value && is_null);
-			*(_handle->skeleton_res) >> *value;
-		
+            int i = 0;
+            *(_handle->skeleton_res) >> i;
+            *value = i;
 			if(_handle->skeleton_res->is_null())
 			{
 				*is_null = true;
@@ -99,12 +100,12 @@ namespace sqlpp
 
         void char_result_t::_bind_text_result(size_t index, const char** value, size_t* len)
         {
-            *(_handle->skeleton_res) >> (char*)*value;
+            char* pnew = (char*)malloc(512);
+            memset(pnew, 0, 512);
 
-            if (_handle->skeleton_res->is_null())
-            {
-               
-            }
+            *(_handle->skeleton_res) >> pnew;
+
+            *len = strlen(pnew);
         }
 
 	}
