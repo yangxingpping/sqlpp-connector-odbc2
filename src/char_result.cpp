@@ -77,7 +77,7 @@ namespace sqlpp
         void char_result_t::_bind_boolean_result(size_t index, signed char* value, bool* is_null)
         {
             assert(value && is_null);
-            *(_handle->skeleton_res) >> *value;
+            *(_handle->skeleton_res) >> (char*)value;
 
             *is_null = _handle->skeleton_res->is_null();
         }
