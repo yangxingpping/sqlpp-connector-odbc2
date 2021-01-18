@@ -3,6 +3,9 @@
 
 #include <string>
 
+#define OTL_ODBC
+#define OTL_BIGINT int64_t
+
 #define OTL_STR_TO_BIGINT(str, n)\
 {\
     n = strtoll(str, NULL, 10);\

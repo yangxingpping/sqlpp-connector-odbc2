@@ -85,7 +85,22 @@ namespace sqlpp
         void char_result_t::_bind_floating_point_result(size_t index, double* value, bool* is_null)
         {
             assert(value && is_null);
-            *(_handle->skeleton_res) >> *value;
+            try
+            {
+                *(_handle->skeleton_res) >> *value;
+            }
+            catch (const otl_exception& e)
+            {
+                if (e.code == otl_error_code_0) //we need try convert str to double
+                {
+                    char ch[256];
+                    memset(ch, 0, sizeof(ch));
+                    _handle->skeleton_res->rewind();
+                    *(_handle->skeleton_res) >> ch;
+                    *value = std::stod(std::move(std::string(ch, strlen(ch))));
+                }
+            }
+            
 
             *is_null = _handle->skeleton_res->is_null();
         }

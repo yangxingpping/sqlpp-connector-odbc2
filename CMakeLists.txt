@@ -31,7 +31,7 @@ endif()
 
 project (sqlpp11-connector-sample)
 
-add_definitions(-DOTL_ODBC -DOTL_BIGINT=int64_t)
+#add_definitions(-DOTL_ODBC -DOTL_BIGINT=int64_t)
 
 find_package(Sqlpp11  REQUIRED)
 #find_package(otl  REQUIRED)

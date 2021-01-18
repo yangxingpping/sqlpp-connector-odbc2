@@ -48,6 +48,12 @@ int main()
         const auto tab = hhhhh::TabBar();
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
+        //select avg value current not support
+        if (const auto& row = *(db(select(avg(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            std::cerr << "avg of alpha: " << row.avg << std::endl;
+        }
+
 		//select all
         for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally()))
         {
@@ -66,6 +72,13 @@ int main()
             std::cerr << "max row.alpha: " << row.max << std::endl;
         }
 
+        //select count value
+        if (const auto& row = *(db(select(count(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            std::cerr << "row count: " << row.count << std::endl;
+        }
+
+        
 	}
 	catch(const sqlpp::exception& )
 	{
