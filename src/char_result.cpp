@@ -70,10 +70,8 @@ namespace sqlpp
             int i = 0;
             *(_handle->skeleton_res) >> i;
             *value = i;
-			if(_handle->skeleton_res->is_null())
-			{
-				*is_null = true;
-			}
+            *is_null = _handle->skeleton_res->is_null();
+			
         }
 
         void char_result_t::_bind_boolean_result(size_t index, signed char* value, bool* is_null)
@@ -81,10 +79,7 @@ namespace sqlpp
             assert(value && is_null);
             *(_handle->skeleton_res) >> *value;
 
-            if (_handle->skeleton_res->is_null())
-            {
-                *is_null = true;
-            }
+            *is_null = _handle->skeleton_res->is_null();
         }
 
         void char_result_t::_bind_floating_point_result(size_t index, double* value, bool* is_null)
@@ -92,10 +87,7 @@ namespace sqlpp
             assert(value && is_null);
             *(_handle->skeleton_res) >> *value;
 
-            if (_handle->skeleton_res->is_null())
-            {
-                *is_null = true;
-            }
+            *is_null = _handle->skeleton_res->is_null();
         }
 
         void char_result_t::_bind_text_result(size_t index, const char** value, size_t* len)
@@ -104,7 +96,7 @@ namespace sqlpp
             memset(pnew, 0, 512);
 
             *(_handle->skeleton_res) >> pnew;
-
+            *value = pnew;
             *len = strlen(pnew);
         }
 
