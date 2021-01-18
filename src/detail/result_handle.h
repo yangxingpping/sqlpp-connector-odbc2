@@ -28,9 +28,8 @@
 #ifndef SQLPP_SKELETON_DETAIL_RESULT_HANDLE_H
 #define SQLPP_SKELETON_DETAIL_RESULT_HANDLE_H
 
-//#include <skeleton/skeleton.h>
 
-#include "otl/otlv4.h"
+#include "odbc_defines.h"
 
 namespace sqlpp
 {

@@ -30,7 +30,7 @@
 
 //#include <skeleton/skeleton.h> // native backend include
 
-#include "otl/otlv4.h"
+#include "odbc_defines.h"
 
 namespace sqlpp
 {

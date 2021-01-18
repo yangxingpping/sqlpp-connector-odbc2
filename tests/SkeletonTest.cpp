@@ -60,6 +60,12 @@ int main()
 			std::cerr << "row.alpha: " << row.left.alpha << ", row.beta: " << row.left.beta << std::endl;
 		}
         
+        //select max value
+		if(const auto& row = *(db(select(max(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            std::cerr << "max row.alpha: " << row.max << std::endl;
+        }
+
 	}
 	catch(const sqlpp::exception& )
 	{

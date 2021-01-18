@@ -28,7 +28,7 @@
 
 #include <assert.h>
 
-#include "otl/otlv4.h"
+#include "odbc_defines.h"
 
 namespace sqlpp
 {
