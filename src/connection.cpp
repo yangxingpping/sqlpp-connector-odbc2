@@ -26,8 +26,8 @@
 
 
 #include <iostream>
-#include <sqlpp11/exception.h>
-#include <sqlpp11/skeleton/connection.h>
+#include "sqlpp11/exception.h"
+#include "sqlpp11/skeleton/connection.h"
 #include "detail/prepared_statement_handle.h"
 #include "detail/result_handle.h"
 #include "detail/connection_handle.h"

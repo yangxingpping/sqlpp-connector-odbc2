@@ -31,13 +31,20 @@ endif()
 
 project (sqlpp11-connector-sample)
 
-#add_definitions(-DOTL_ODBC -DOTL_BIGINT=int64_t)
+IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
+	
+	ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    add_definitions(-D OTL_ODBC_UNIX)
+    link_libraries(odbc)
+	ENDIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 find_package(Sqlpp11  REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
+
+include_directories(/home/alqaz/vcpkg/installed/x64-linux/include)
 
 add_subdirectory(src)
 add_subdirectory(tests)
