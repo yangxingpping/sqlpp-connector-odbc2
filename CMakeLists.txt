@@ -44,7 +44,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 
-include_directories(/home/alqaz/vcpkg/installed/x64-linux/include)
+
 
 add_subdirectory(src)
 add_subdirectory(tests)

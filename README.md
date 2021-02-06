@@ -5,3 +5,5 @@ A skeleton for writing connector libraries for sqlpp11 (https://github.com/rbock
 
 
 You can use this as a starting point for writing a connector library for sqlpp11. It is not hard.
+
+shoud install sqlpp11 by yourself, other dependies by vcpkg
