@@ -9,7 +9,7 @@ macro (build_and_run arg)
 
 	add_executable("Sqlpp11Skeleton${arg}" "${arg}.cpp" ${sqlpp_headers})
 	target_link_libraries("Sqlpp11Skeleton${arg}"  PUBLIC sqlpp-skeleton ) #PUBLIC Sqlpp11
-	#target_link_libraries("Sqlpp11Skeleton${arg}" nativeclient)
+	set_target_properties("Sqlpp11Skeleton${arg}" PROPERTIES VS_GLOBAL_VcpkgEnabled true)
 	add_test("Sqlpp11Skeleton${arg}" "${arg}")
 endmacro ()
 

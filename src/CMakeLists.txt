@@ -6,6 +6,7 @@ add_library(sqlpp-skeleton
 		bind_result.cpp
 		detail/connection_handle.cpp)
 
-target_link_libraries(sqlpp-skeleton)# PUBLIC Sqlpp11)
+#target_link_libraries(sqlpp-skeleton PUBLIC Sqlpp11)
+set_target_properties(sqlpp-skeleton PROPERTIES VS_GLOBAL_VcpkgEnabled true)
 
 install(TARGETS sqlpp-skeleton DESTINATION lib)

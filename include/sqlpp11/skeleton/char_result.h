@@ -30,8 +30,8 @@
 
 #include <cstdlib>
 #include <memory>
-#include <sqlpp11/exception.h>
-#include <sqlpp11/skeleton/char_result_row.h>
+#include "sqlpp11/exception.h"
+#include "sqlpp11/skeleton/char_result_row.h"
 
 #include <iso646.h>
 
