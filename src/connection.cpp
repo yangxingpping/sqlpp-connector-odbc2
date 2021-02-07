@@ -105,10 +105,7 @@ namespace sqlpp
 
 		size_t connection::insert_impl(const std::string& statement)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << statement << "]" << std::endl;
-			}
+			spdlog::info("execute sql:{}", statement);
 			execute_statement(*_handle, statement);
             return 0; //fix me
 		}

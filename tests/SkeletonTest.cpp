@@ -28,6 +28,8 @@
 #include <sqlpp11/ppgen.h>
 #include "sqlpp11/odbc2/odbc2.h"
 
+#include "spdlog/spdlog.h"
+
 #include <iostream>
 #include <vector>
 
@@ -53,7 +55,7 @@ int main()
 	{
 		odbc2::connection db(config);
 
-		std::cout << "connect success" << std::endl;
+        spdlog::info("connect success");
 
 		auto tab =  tab_bar::tab_bar{};
 
@@ -62,31 +64,31 @@ int main()
         //select avg value current not support
         if (const auto& row = *(db(select(avg(tab.alpha)).from(tab).unconditionally()).begin()))
         {
-            std::cerr << "avg of alpha: " << row.avg << std::endl;
+            spdlog::info("avg of alpha: {}" ,row.avg.value());
         }
 
 		//select all
         for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
         {
-            std::cerr << "row.alpha: " << row.alpha << ", row.beta: " << row.beta << ", row.gamma: " << row.gamma << std::endl;
+            spdlog::info("alpha:{}, beta:{}, gamma:{}, delta:{}", row.alpha.value(), row.beta.value(), row.gamma.value(), row.delta.value());
         }
 
 		//select some fields
 		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
 		{
-			std::cerr << "row.alpha: " << row.left.alpha << ", row.beta: " << row.left.beta << std::endl;
+            spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
 		}
         
         //select max value
 		if(const auto& row = *(db(select(max(tab.alpha)).from(tab).unconditionally()).begin()))
         {
-            std::cerr << "max row.alpha: " << row.max << std::endl;
+            spdlog::info("max row.alpha: {}", row.max.value());
         }
 
         //select count value
         if (const auto& row = *(db(select(count(tab.alpha)).from(tab).unconditionally()).begin()))
         {
-            std::cerr << "row count: " << row.count << std::endl;
+            spdlog::info("row count: {}", row.count.value());
         }
 
         

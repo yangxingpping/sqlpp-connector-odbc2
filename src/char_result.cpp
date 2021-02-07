@@ -32,6 +32,8 @@
 #include <string>
 #include <assert.h>
 
+#include "spdlog/spdlog.h"
+
 
 namespace sqlpp
 {
@@ -43,11 +45,12 @@ namespace sqlpp
 		char_result_t::char_result_t(std::unique_ptr<detail::result_handle>&& handle):
 			_handle(std::move(handle))
 		{
-			if (!_handle)
-				throw std::runtime_error("Skeleton: Constructing char_result without valid handle");
+            if (!_handle)
+            {
+                spdlog::error("Skeleton: Constructing char_result without valid handle");
+            }
 
-			if (_handle->debug)
-				std::cerr << "Skeleton debug: Constructing result, using handle at " << _handle.get() << std::endl;
+		    spdlog::info("Skeleton debug: Constructing result, using handle at:{}", (void*)_handle.get());
 		}
 
 		char_result_t::~char_result_t() = default;
