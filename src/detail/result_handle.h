@@ -33,20 +33,20 @@
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		// FIXME
-		using SKELETON_RES = std::shared_ptr<otl_stream>;
+		using ODBC2_RES = std::shared_ptr<otl_stream>;
 
 		namespace detail
 		{
 			struct result_handle
 			{
-				SKELETON_RES skeleton_res;
+				ODBC2_RES odbc2_res;
 				bool debug;
 
-				result_handle(SKELETON_RES res, bool debug_):
-					skeleton_res(res),
+				result_handle(ODBC2_RES res, bool debug_):
+					odbc2_res(res),
 					debug(debug_)
 				{}
 
@@ -62,7 +62,7 @@ namespace sqlpp
 
 				bool operator!() const
 				{
-					return skeleton_res==nullptr;
+					return odbc2_res==nullptr;
 				}
 			};
 		}

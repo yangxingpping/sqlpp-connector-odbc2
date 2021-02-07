@@ -25,37 +25,29 @@
  */
 
 
-#ifndef SQLPP_SKELETON_CONNECTION_HANDLE_H
-#define SQLPP_SKELETON_CONNECTION_HANDLE_H
+#ifndef SQLPP_SKELETON_CONNECTION_CONFIG_H
+#define SQLPP_SKELETON_CONNECTION_CONFIG_H
 
-//#include <odbc2/odbc2.h> // native backend include
-
-#include "odbc_defines.h"
+#include <string>
 
 namespace sqlpp
 {
 	namespace odbc2
 	{
-		struct connection_config;
-
-		namespace detail
+		struct connection_config
 		{
-			struct connection_handle_t
-			{
-				connection_handle_t(connection_config config);
-				~connection_handle_t();
-				connection_handle_t(const connection_handle_t&) = delete;
-				connection_handle_t(connection_handle_t&&) = delete;
-				connection_handle_t& operator=(const connection_handle_t&) = delete;
-				connection_handle_t& operator=(connection_handle_t&&) = delete;
-
-				otl_connect _db; // connect object
-
-				connection_config _conf;
-			};
-		}
+			std::string host = "localhost";
+			std::string user;
+			std::string password;
+			std::string database;
+			unsigned int port = 0;
+			std::string unix_socket;
+			unsigned long client_flag = 0;
+			std::string charset = "utf8";
+			bool auto_reconnect = true;
+			bool debug = false;
+		};
 	}
 }
-
 
 #endif

@@ -1,12 +1,12 @@
 
-add_library(sqlpp-skeleton 
+add_library(sqlpp-odbc2 
 		connection.cpp
 		prepared_statement.cpp
 		char_result.cpp
 		bind_result.cpp
 		detail/connection_handle.cpp)
 
-#target_link_libraries(sqlpp-skeleton PUBLIC Sqlpp11)
-set_target_properties(sqlpp-skeleton PROPERTIES VS_GLOBAL_VcpkgEnabled true)
+#target_link_libraries(sqlpp-odbc2 PUBLIC Sqlpp11)
+set_target_properties(sqlpp-odbc2 PROPERTIES VS_GLOBAL_VcpkgEnabled true)
 
-install(TARGETS sqlpp-skeleton DESTINATION lib)
+install(TARGETS sqlpp-odbc2 DESTINATION lib)

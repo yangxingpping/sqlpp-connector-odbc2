@@ -32,7 +32,7 @@
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		// FIXME
 		using SKELETON_STMT = std::shared_ptr<otl_stream>;

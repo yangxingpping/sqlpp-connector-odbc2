@@ -27,7 +27,7 @@
 
 #include <memory>
 #include "sqlpp11/exception.h"
-#include "sqlpp11/skeleton/connection_config.h"
+#include "sqlpp11/odbc2/connection_config.h"
 #include "connection_handle.h"
 
 #include "odbc_defines.h"
@@ -38,7 +38,7 @@
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		namespace detail
 		{

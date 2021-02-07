@@ -26,7 +26,7 @@
 
 
 #include <iostream>
-#include <sqlpp11/skeleton/char_result.h>
+#include <sqlpp11/odbc2/char_result.h>
 #include "detail/result_handle.h"
 
 #include <string>
@@ -35,7 +35,7 @@
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		char_result_t::char_result_t()
 		{}
@@ -57,7 +57,7 @@ namespace sqlpp
 		bool char_result_t::next_impl()
 		{
             bool bret = true;
-            if(_handle->skeleton_res->eof())
+            if(_handle->odbc2_res->eof())
             {
                 bret = false;
             }
@@ -72,18 +72,18 @@ namespace sqlpp
             #else
             int i;
             #endif
-            *(_handle->skeleton_res) >> i;
+            *(_handle->odbc2_res) >> i;
             *value = i;
-            *is_null = _handle->skeleton_res->is_null();
+            *is_null = _handle->odbc2_res->is_null();
 			
         }
 
         void char_result_t::_bind_boolean_result(size_t index, signed char* value, bool* is_null)
         {
             assert(value && is_null);
-            *(_handle->skeleton_res) >> (char*)value;
+            *(_handle->odbc2_res) >> (char*)value;
 
-            *is_null = _handle->skeleton_res->is_null();
+            *is_null = _handle->odbc2_res->is_null();
         }
 
         void char_result_t::_bind_floating_point_result(size_t index, double* value, bool* is_null)
@@ -91,7 +91,7 @@ namespace sqlpp
             assert(value && is_null);
             try
             {
-                *(_handle->skeleton_res) >> *value;
+                *(_handle->odbc2_res) >> *value;
             }
             catch (const otl_exception& e)
             {
@@ -99,14 +99,14 @@ namespace sqlpp
                 {
                     char ch[256];
                     memset(ch, 0, sizeof(ch));
-                    _handle->skeleton_res->rewind();
-                    *(_handle->skeleton_res) >> ch;
+                    _handle->odbc2_res->rewind();
+                    *(_handle->odbc2_res) >> ch;
                     *value = std::stod(std::move(std::string(ch, strlen(ch))));
                 }
             }
             
 
-            *is_null = _handle->skeleton_res->is_null();
+            *is_null = _handle->odbc2_res->is_null();
         }
 
         void char_result_t::_bind_text_result(size_t index, const char** value, size_t* len)
@@ -114,7 +114,7 @@ namespace sqlpp
             char* pnew = (char*)malloc(512);
             memset(pnew, 0, 512);
 
-            *(_handle->skeleton_res) >> pnew;
+            *(_handle->odbc2_res) >> pnew;
             *value = pnew;
             *len = strlen(pnew);
         }

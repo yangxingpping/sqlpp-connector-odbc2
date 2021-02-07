@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014, Roland Bock
+ * Copyright (c) 2013, Roland Bock
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -24,26 +24,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SQLPP_SKELETON_CHAR_RESULT_ROW_H
-#define SQLPP_SKELETON_CHAR_RESULT_ROW_H
 
-#include <iso646.h>
+#ifndef SQLPP_SKELETON_PREPARED_STATEMENT_H
+#define SQLPP_SKELETON_PREPARED_STATEMENT_H
+
+#include <memory>
+#include <string>
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
-		struct char_result_row_t
-		{
-			const char** data;
-			size_t* len;
+		class connection;
 
-			bool operator==(const char_result_row_t& rhs) const
+		namespace detail
+		{
+			struct prepared_statement_handle_t;
+		}
+
+		class prepared_statement_t
+		{
+			friend ::sqlpp::odbc2::connection;
+			std::shared_ptr<detail::prepared_statement_handle_t> _handle;
+
+		public:
+			prepared_statement_t() = delete;
+			prepared_statement_t(std::shared_ptr<detail::prepared_statement_handle_t>&& handle);
+			prepared_statement_t(const prepared_statement_t&) = delete;
+			prepared_statement_t(prepared_statement_t&& rhs) = default;
+			prepared_statement_t& operator=(const prepared_statement_t&) = delete;
+			prepared_statement_t& operator=(prepared_statement_t&&) = default;
+			~prepared_statement_t() = default;
+
+			bool operator==(const prepared_statement_t& rhs) const
 			{
-				return data == rhs.data and len == rhs.len; 
+				return _handle == rhs._handle;
 			}
+
+			void _bind_boolean_parameter(size_t index, const signed char* value, bool is_null);
+			void _bind_floating_point_parameter(size_t index, const double* value, bool is_null);
+			void _bind_integral_parameter(size_t index, const int64_t* value, bool is_null);
+			void _bind_text_parameter(size_t index, const std::string* value, bool is_null);
 		};
 	}
 }
-
 #endif

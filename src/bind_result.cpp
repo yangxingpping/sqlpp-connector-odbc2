@@ -27,7 +27,7 @@
 
 #include <iostream>
 #include "sqlpp11/exception.h"
-#include "sqlpp11/skeleton/bind_result.h"
+#include "sqlpp11/odbc2/bind_result.h"
 #include "detail/prepared_statement_handle.h"
 
 #include <iso646.h>
@@ -36,7 +36,7 @@
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		bind_result_t::bind_result_t(const std::shared_ptr<detail::prepared_statement_handle_t>& handle):
 			_handle(handle)

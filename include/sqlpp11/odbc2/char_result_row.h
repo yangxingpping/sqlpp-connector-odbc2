@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Roland Bock
+ * Copyright (c) 2013-2014, Roland Bock
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -24,12 +24,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef SQLPP_SKELETON_CHAR_RESULT_ROW_H
+#define SQLPP_SKELETON_CHAR_RESULT_ROW_H
 
-#ifndef SQLPP_SKELETON_H
-#define SQLPP_SKELETON_H
+#include <iso646.h>
 
-#include <sqlpp11/skeleton/connection.h>
-#include <sqlpp11/skeleton/char_result.h>
+namespace sqlpp
+{
+	namespace odbc2
+	{
+		struct char_result_row_t
+		{
+			const char** data;
+			size_t* len;
+
+			bool operator==(const char_result_row_t& rhs) const
+			{
+				return data == rhs.data and len == rhs.len; 
+			}
+		};
+	}
+}
 
 #endif
-

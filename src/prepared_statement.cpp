@@ -26,13 +26,13 @@
 
 
 #include <iostream>
-#include <sqlpp11/skeleton/prepared_statement.h>
+#include <sqlpp11/odbc2/prepared_statement.h>
 #include "detail/prepared_statement_handle.h"
 
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		prepared_statement_t::prepared_statement_t(std::shared_ptr<detail::prepared_statement_handle_t>&& handle):
 			_handle(std::move(handle))

@@ -23,29 +23,40 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "demo.h"
+//#include "demo.h"
 #include <sqlpp11/sqlpp11.h>
-#include <sqlpp11/skeleton/skeleton.h>
+#include <sqlpp11/ppgen.h>
+#include "sqlpp11/odbc2/odbc2.h"
 
 #include <iostream>
 #include <vector>
 
 
+SQLPP_DECLARE_TABLE(
+	(tab_bar),
+    (alpha, int, SQLPP_PRIMARY_KEY)
+    (beta, varchar(255))
+    (gamma, int, SQLPP_NOT_NULL)
+    (delta, varchar(255) )
+)
+
 SQLPP_ALIAS_PROVIDER(left);
 SQLPP_ALIAS_PROVIDER(right);
 
-namespace skeleton = sqlpp::skeleton;
+namespace odbc2 = sqlpp::odbc2;
 int main()
 {
-	skeleton::connection_config config{};
+	odbc2::connection_config config{};
  	config.user = "";
  	config.database = "demo_sqlite";
 	config.debug = true;
 	try
 	{
-		skeleton::connection db(config);
+		odbc2::connection db(config);
 
-        const auto tab = hhhhh::TabBar();
+		auto tab =  tab_bar::tab_bar{};
+
+        //const auto tab = hhhhh::TabBar();
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
         //select avg value current not support
@@ -85,7 +96,7 @@ int main()
 		std::cerr << "For testing, you'll need to create a database sqlpp_sample with a table tab_sample, as shown in tests/TabSample.sql" << std::endl;
 		throw;
 	}
-	/*skeleton::connection db(config);
+	/*odbc2::connection db(config);
 	db.execute(R"(DROP TABLE IF EXISTS tab_sample)");
 	db.execute(R"(CREATE TABLE tab_sample (
 			alpha bigint(20) AUTO_INCREMENT DEFAULT NULL,

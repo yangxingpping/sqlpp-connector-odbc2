@@ -25,29 +25,11 @@
  */
 
 
-#ifndef SQLPP_SKELETON_CONNECTION_CONFIG_H
-#define SQLPP_SKELETON_CONNECTION_CONFIG_H
+#ifndef SQLPP_SKELETON_H
+#define SQLPP_SKELETON_H
 
-#include <string>
-
-namespace sqlpp
-{
-	namespace skeleton
-	{
-		struct connection_config
-		{
-			std::string host = "localhost";
-			std::string user;
-			std::string password;
-			std::string database;
-			unsigned int port = 0;
-			std::string unix_socket;
-			unsigned long client_flag = 0;
-			std::string charset = "utf8";
-			bool auto_reconnect = true;
-			bool debug = false;
-		};
-	}
-}
+#include <sqlpp11/odbc2/connection.h>
+#include <sqlpp11/odbc2/char_result.h>
 
 #endif
+

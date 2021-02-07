@@ -27,14 +27,14 @@
 
 #include <iostream>
 #include "sqlpp11/exception.h"
-#include "sqlpp11/skeleton/connection.h"
+#include "sqlpp11/odbc2/connection.h"
 #include "detail/prepared_statement_handle.h"
 #include "detail/result_handle.h"
 #include "detail/connection_handle.h"
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 
         void execute_prepared_statement(detail::prepared_statement_handle_t& prepared_statement)

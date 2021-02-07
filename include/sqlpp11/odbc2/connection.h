@@ -32,14 +32,14 @@
 #include <sstream>
 #include <sqlpp11/connection.h>
 #include <sqlpp11/serialize.h>
-#include <sqlpp11/skeleton/prepared_statement.h>
-#include <sqlpp11/skeleton/char_result.h>
-#include <sqlpp11/skeleton/bind_result.h>
-#include <sqlpp11/skeleton/connection_config.h>
+#include <sqlpp11/odbc2/prepared_statement.h>
+#include <sqlpp11/odbc2/char_result.h>
+#include <sqlpp11/odbc2/bind_result.h>
+#include <sqlpp11/odbc2/connection_config.h>
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		namespace detail
 		{
@@ -89,7 +89,7 @@ namespace sqlpp
 			size_t run_prepared_remove_impl(prepared_statement_t& prepared_statement);
 
 		public:
-			using _prepared_statement_t = ::sqlpp::skeleton::prepared_statement_t;
+			using _prepared_statement_t = ::sqlpp::odbc2::prepared_statement_t;
 			using _context_t = serializer_t;
 			using _serializer_context_t = _context_t;
 			using _interpreter_context_t = _context_t;
@@ -255,6 +255,6 @@ namespace sqlpp
 	}
 }
 
-#include <sqlpp11/skeleton/serializer.h>
+#include <sqlpp11/odbc2/serializer.h>
 
 #endif

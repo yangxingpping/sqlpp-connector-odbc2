@@ -25,47 +25,78 @@
  */
 
 
-#ifndef SQLPP_SKELETON_PREPARED_STATEMENT_H
-#define SQLPP_SKELETON_PREPARED_STATEMENT_H
+#ifndef SQLPP_SKELETON_BIND_RESULT_H
+#define SQLPP_SKELETON_BIND_RESULT_H
 
 #include <memory>
-#include <string>
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
-		class connection;
-
 		namespace detail
 		{
 			struct prepared_statement_handle_t;
 		}
 
-		class prepared_statement_t
+		class bind_result_t
 		{
-			friend ::sqlpp::skeleton::connection;
 			std::shared_ptr<detail::prepared_statement_handle_t> _handle;
+			void* _result_row_address = nullptr;
 
 		public:
-			prepared_statement_t() = delete;
-			prepared_statement_t(std::shared_ptr<detail::prepared_statement_handle_t>&& handle);
-			prepared_statement_t(const prepared_statement_t&) = delete;
-			prepared_statement_t(prepared_statement_t&& rhs) = default;
-			prepared_statement_t& operator=(const prepared_statement_t&) = delete;
-			prepared_statement_t& operator=(prepared_statement_t&&) = default;
-			~prepared_statement_t() = default;
+			bind_result_t() = default;
+			bind_result_t(const std::shared_ptr<detail::prepared_statement_handle_t>& handle);
+			bind_result_t(const bind_result_t&) = delete;
+			bind_result_t(bind_result_t&& rhs) = default;
+			bind_result_t& operator=(const bind_result_t&) = delete;
+			bind_result_t& operator=(bind_result_t&&) = default;
+			~bind_result_t() = default;
 
-			bool operator==(const prepared_statement_t& rhs) const
+			bool operator==(const bind_result_t& rhs) const
 			{
 				return _handle == rhs._handle;
 			}
 
-			void _bind_boolean_parameter(size_t index, const signed char* value, bool is_null);
-			void _bind_floating_point_parameter(size_t index, const double* value, bool is_null);
-			void _bind_integral_parameter(size_t index, const int64_t* value, bool is_null);
-			void _bind_text_parameter(size_t index, const std::string* value, bool is_null);
+			template<typename ResultRow>
+			void next(ResultRow& result_row)
+			{
+				if (!_handle)
+				{
+					result_row._invalidate();
+					return;
+				}
+
+				if (&result_row != _result_row_address)
+				{
+					result_row._bind(*this);
+					bind_impl();
+					_result_row_address = &result_row;
+				}
+				if (next_impl())
+				{
+					if (not result_row)
+					{
+						result_row._validate();
+					}
+				}
+				else
+				{
+					if (result_row)
+						result_row._invalidate();
+				}
+			};
+
+			void _bind_boolean_result(size_t index, signed char* value, bool* is_null);
+			void _bind_floating_point_result(size_t index, double* value, bool* is_null);
+			void _bind_integral_result(size_t index, int64_t* value, bool* is_null);
+			void _bind_text_result(size_t index, const char** text, size_t* len);
+
+		private:
+			void bind_impl();
+			bool next_impl();
 		};
+
 	}
 }
 #endif

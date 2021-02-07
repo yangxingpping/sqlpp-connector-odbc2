@@ -25,35 +25,40 @@
  */
 
 
-#ifndef SQLPP_SKELETON_BIND_RESULT_H
-#define SQLPP_SKELETON_BIND_RESULT_H
+#ifndef SQLPP_SKELETON_CHAR_RESULT_H
+#define SQLPP_SKELETON_CHAR_RESULT_H
 
+#include <cstdlib>
 #include <memory>
+#include "sqlpp11/exception.h"
+#include "sqlpp11/odbc2/char_result_row.h"
+
+#include <iso646.h>
 
 namespace sqlpp
 {
-	namespace skeleton
+	namespace odbc2
 	{
 		namespace detail
 		{
-			struct prepared_statement_handle_t;
+			struct result_handle;
 		}
 
-		class bind_result_t
+		class char_result_t
 		{
-			std::shared_ptr<detail::prepared_statement_handle_t> _handle;
-			void* _result_row_address = nullptr;
+			std::unique_ptr<detail::result_handle> _handle;
+			char_result_row_t _char_result_row;
 
 		public:
-			bind_result_t() = default;
-			bind_result_t(const std::shared_ptr<detail::prepared_statement_handle_t>& handle);
-			bind_result_t(const bind_result_t&) = delete;
-			bind_result_t(bind_result_t&& rhs) = default;
-			bind_result_t& operator=(const bind_result_t&) = delete;
-			bind_result_t& operator=(bind_result_t&&) = default;
-			~bind_result_t() = default;
+			char_result_t();
+			char_result_t(std::unique_ptr<detail::result_handle>&& handle);
+			char_result_t(const char_result_t&) = delete;
+			char_result_t(char_result_t&& rhs);
+			char_result_t& operator=(const char_result_t&) = delete;
+			char_result_t& operator=(char_result_t&&);
+			~char_result_t();
 
-			bool operator==(const bind_result_t& rhs) const
+			bool operator==(const char_result_t& rhs) const
 			{
 				return _handle == rhs._handle;
 			}
@@ -67,18 +72,13 @@ namespace sqlpp
 					return;
 				}
 
-				if (&result_row != _result_row_address)
-				{
-					result_row._bind(*this);
-					bind_impl();
-					_result_row_address = &result_row;
-				}
 				if (next_impl())
 				{
 					if (not result_row)
 					{
 						result_row._validate();
 					}
+					result_row._bind(*this);
 				}
 				else
 				{
@@ -88,12 +88,14 @@ namespace sqlpp
 			};
 
 			void _bind_boolean_result(size_t index, signed char* value, bool* is_null);
+
 			void _bind_floating_point_result(size_t index, double* value, bool* is_null);
+
 			void _bind_integral_result(size_t index, int64_t* value, bool* is_null);
-			void _bind_text_result(size_t index, const char** text, size_t* len);
+
+			void _bind_text_result(size_t index, const char** value, size_t* len);
 
 		private:
-			void bind_impl();
 			bool next_impl();
 		};
 
