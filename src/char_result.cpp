@@ -69,12 +69,28 @@ namespace sqlpp
 			assert(value && is_null);
             #ifdef _WIN32
             OTL_BIGINT i;
-            #else
-            int i;
-            #endif
             *(_handle->odbc2_res) >> i;
             *value = i;
             *is_null = _handle->odbc2_res->is_null();
+            #else
+            try
+            {
+                *(_handle->odbc2_res) >> *value;
+            }
+            catch (const otl_exception& e)
+            {
+                if (e.code == otl_error_code_0) //we need try convert str to double
+                {
+                    char ch[256];
+                    memset(ch, 0, sizeof(ch));
+                    _handle->odbc2_res->rewind();
+                    *(_handle->odbc2_res) >> ch;
+                    *value = std::stoll(std::move(std::string(ch, strlen(ch))));
+                }
+            }
+            *is_null = _handle->odbc2_res->is_null();
+            #endif
+            
 			
         }
 

@@ -24,12 +24,9 @@
 
 cmake_minimum_required(VERSION 3.6)
 
-if(DEFINED ENV{VCPKG_ROOT} )
-  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      CACHE STRING "")
-endif()
-
 project (sqlpp11-connector-sample)
+
+include_directories(/home/alqaz/vcpkg/installed/x64-linux/include)
 
 IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 	
