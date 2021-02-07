@@ -1,16 +1,15 @@
-macro (build_and_run arg)
-	# Add headers to sources to enable file browsing in IDEs
+project(sqlitetest)
 
-	IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
+IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 	link_libraries(odbc32)
-	ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	
+ENDIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
-	ENDIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
+aux_source_directory(./ DEMO_SOURCE)
 
-	add_executable("Sqlpp11Skeleton${arg}" "${arg}.cpp" ${sqlpp_headers})
-	target_link_libraries("Sqlpp11Skeleton${arg}"  PUBLIC sqlpp-odbc2) #PUBLIC Sqlpp11
-	set_target_properties("Sqlpp11Skeleton${arg}" PROPERTIES VS_GLOBAL_VcpkgEnabled true)
-	add_test("Sqlpp11Skeleton${arg}" "${arg}")
-endmacro ()
+add_executable(sqlitetest ${DEMO_SOURCE})
+target_link_libraries(sqlitetest  PUBLIC sqlpp-odbc2) #PUBLIC Sqlpp11
+set_target_properties(sqlitetest PROPERTIES VS_GLOBAL_VcpkgEnabled true)
+add_test(sqlitetest "${arg}")
 
-build_and_run(SkeletonTest)
