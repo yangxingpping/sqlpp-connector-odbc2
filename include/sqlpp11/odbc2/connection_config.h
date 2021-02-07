@@ -30,22 +30,25 @@
 
 #include <string>
 
+using std::string;
+
 namespace sqlpp
 {
 	namespace odbc2
 	{
 		struct connection_config
 		{
-			std::string host = "localhost";
-			std::string user;
-			std::string password;
-			std::string database;
+			string host = "localhost";
+			string user;
+			string password;
+			string database;
 			unsigned int port = 0;
-			std::string unix_socket;
+			string unix_socket;
 			unsigned long client_flag = 0;
 			std::string charset = "utf8";
 			bool auto_reconnect = true;
 			bool debug = false;
+			string logfile = "logodbc.log";
 		};
 	}
 }

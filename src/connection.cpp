@@ -32,6 +32,8 @@
 #include "detail/result_handle.h"
 #include "detail/connection_handle.h"
 
+#include "spdlog/spdlog.h"
+
 namespace sqlpp
 {
 	namespace odbc2
@@ -60,10 +62,7 @@ namespace sqlpp
 
 		char_result_t connection::select_impl(const std::string& statement)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << statement << "]" << std::endl;
-			}
+			spdlog::info("select str:{}", statement);
 
 			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
             std::unique_ptr<detail::result_handle> result_handle(
@@ -97,10 +96,7 @@ namespace sqlpp
 
 		prepared_statement_t connection::prepare_impl(const std::string& statement, size_t no_of_parameters, size_t no_of_columns)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << statement << "]" << std::endl;
-			}
+			spdlog::info("prepare sql:{}", statement);
 			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db,  otl_explicit_select, "");
 
 			return { std::unique_ptr<detail::prepared_statement_handle_t>(
@@ -119,29 +115,20 @@ namespace sqlpp
 
 		void connection::execute(const std::string& command)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << command << "]" << std::endl;
-			}
+			spdlog::info("execute:{}", command);
 			execute_statement(*_handle, command);
 		}
 
 		size_t connection::update_impl(const std::string& statement)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << statement << "]" << std::endl;
-			}
+			spdlog::info("execute sql:{}", statement);
             execute_statement(*_handle, statement);
             return 0; //fix me
 		}
 
 		size_t connection::remove_impl(const std::string& statement)
 		{
-			if(_config.debug)
-			{
-				std::cout << "execute sql:[" << statement << "]" << std::endl;
-			}
+			spdlog::info( "execute sql:{}", statement);
             execute_statement(*_handle, statement);
             return 0; //fix me
 		}
