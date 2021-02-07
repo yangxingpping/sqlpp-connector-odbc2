@@ -31,7 +31,7 @@ project (sqlpp11-connector-sample)
 IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 	
 ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	add_definitions(-D OTL_ODBC_UNIX)
+	#add_definitions(-D OTL_ODBC_UNIX)
 	link_libraries(odbc)
 ENDIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 

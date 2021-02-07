@@ -23,7 +23,7 @@
 
 #else
 //#define OTL_BIGINT int64_t
-
+#define OTL_ODBC_UNIX
 #endif  //_WIN32
 
 #include "otl/otlv4.h"
