@@ -109,23 +109,39 @@ namespace sqlpp
 
 		size_t connection::insert_impl(const std::string& statement)
 		{
+			if(_config.debug)
+			{
+				std::cout << "execute sql:[" << statement << "]" << std::endl;
+			}
 			execute_statement(*_handle, statement);
             return 0; //fix me
 		}
 
 		void connection::execute(const std::string& command)
 		{
+			if(_config.debug)
+			{
+				std::cout << "execute sql:[" << command << "]" << std::endl;
+			}
 			execute_statement(*_handle, command);
 		}
 
 		size_t connection::update_impl(const std::string& statement)
 		{
+			if(_config.debug)
+			{
+				std::cout << "execute sql:[" << statement << "]" << std::endl;
+			}
             execute_statement(*_handle, statement);
             return 0; //fix me
 		}
 
 		size_t connection::remove_impl(const std::string& statement)
 		{
+			if(_config.debug)
+			{
+				std::cout << "execute sql:[" << statement << "]" << std::endl;
+			}
             execute_statement(*_handle, statement);
             return 0; //fix me
 		}
