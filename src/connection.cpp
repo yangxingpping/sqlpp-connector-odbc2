@@ -36,7 +36,7 @@ namespace sqlpp
 {
 	namespace odbc2
 	{
-
+		static connection_config _config;
         void execute_prepared_statement(detail::prepared_statement_handle_t& prepared_statement)
         {
             
@@ -50,7 +50,7 @@ namespace sqlpp
 		connection::connection(connection_config config):
 			_handle(new detail::connection_handle_t(config))
 		{
-			
+			_config = config;
 		}
 
 		connection::~connection()
@@ -60,7 +60,7 @@ namespace sqlpp
 
 		char_result_t connection::select_impl(const std::string& statement)
 		{
-			if(config.debug)
+			if(_config.debug)
 			{
 				std::cout << "execute sql:[" << statement << "]" << std::endl;
 			}
@@ -97,7 +97,7 @@ namespace sqlpp
 
 		prepared_statement_t connection::prepare_impl(const std::string& statement, size_t no_of_parameters, size_t no_of_columns)
 		{
-			if(config.debug)
+			if(_config.debug)
 			{
 				std::cout << "execute sql:[" << statement << "]" << std::endl;
 			}
