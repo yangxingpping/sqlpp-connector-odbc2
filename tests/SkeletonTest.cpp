@@ -32,6 +32,8 @@
 #include <vector>
 
 
+
+
 SQLPP_DECLARE_TABLE(
 	(tab_bar),
     (alpha, int, SQLPP_PRIMARY_KEY)
@@ -54,9 +56,10 @@ int main()
 	{
 		odbc2::connection db(config);
 
+		std::cout << "connect success" << std::endl;
+
 		auto tab =  tab_bar::tab_bar{};
 
-        //const auto tab = hhhhh::TabBar();
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
         //select avg value current not support

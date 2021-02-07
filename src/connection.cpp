@@ -60,6 +60,11 @@ namespace sqlpp
 
 		char_result_t connection::select_impl(const std::string& statement)
 		{
+			if(config.debug)
+			{
+				std::cout << "execute sql:[" << statement << "]" << std::endl;
+			}
+
 			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
             std::unique_ptr<detail::result_handle> result_handle(
                 new detail::result_handle(_stream, _handle->_conf.debug));
@@ -92,6 +97,10 @@ namespace sqlpp
 
 		prepared_statement_t connection::prepare_impl(const std::string& statement, size_t no_of_parameters, size_t no_of_columns)
 		{
+			if(config.debug)
+			{
+				std::cout << "execute sql:[" << statement << "]" << std::endl;
+			}
 			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db,  otl_explicit_select, "");
 
 			return { std::unique_ptr<detail::prepared_statement_handle_t>(
