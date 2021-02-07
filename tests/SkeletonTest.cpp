@@ -31,9 +31,6 @@
 #include <iostream>
 #include <vector>
 
-
-
-
 SQLPP_DECLARE_TABLE(
 	(tab_bar),
     (alpha, int, SQLPP_PRIMARY_KEY)
