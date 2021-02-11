@@ -61,6 +61,26 @@ int main()
 
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
+        //select max value
+        if (const auto& row = *(db(select(max(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            spdlog::info("max row.alpha: {}", row.max.value());
+        }
+
+        //select min value
+        if (const auto& row = *(db(select(min(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            spdlog::info("row count: {}", row.min.value());
+        }
+
+        //select count value
+        if (const auto& row = *(db(select(count(tab.alpha)).from(tab).unconditionally()).begin()))
+        {
+            spdlog::info("row count: {}", row.count.value());
+        }
+
+        
+
         //select avg value current not support
         if (const auto& row = *(db(select(avg(tab.alpha)).from(tab).unconditionally()).begin()))
         {
@@ -78,20 +98,6 @@ int main()
 		{
             spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
 		}
-        
-        //select max value
-		if(const auto& row = *(db(select(max(tab.alpha)).from(tab).unconditionally()).begin()))
-        {
-            spdlog::info("max row.alpha: {}", row.max.value());
-        }
-
-        //select count value
-        if (const auto& row = *(db(select(count(tab.alpha)).from(tab).unconditionally()).begin()))
-        {
-            spdlog::info("row count: {}", row.count.value());
-        }
-
-        
 	}
 	catch(const sqlpp::exception& )
 	{

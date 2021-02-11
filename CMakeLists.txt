@@ -51,6 +51,7 @@ include_directories(include)
 
 add_subdirectory(src)
 add_subdirectory(tests)
+add_subdirectory(testotl)
 
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/sqlpp11" DESTINATION include)
 
