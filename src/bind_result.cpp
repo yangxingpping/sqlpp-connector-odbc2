@@ -84,7 +84,8 @@ namespace sqlpp
 		void bind_result_t::_bind_text_result(size_t index, const char** value, size_t* len)
 		{
 			assert(value && len);
-			otl_long_string f2(*value, *len);
+			assert(*len < INT_MAX);
+			otl_long_string f2(*value, (int)*len);
 
             if (_handle->_debug)
                 std::cerr << "odbc debug: binding text result " << *value << " at index: " << index << std::endl;

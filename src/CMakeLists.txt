@@ -7,5 +7,6 @@ add_library(sqlpp-odbc2
 		detail/connection_handle.cpp)
 		
 set_target_properties(sqlpp-odbc2 PROPERTIES VS_GLOBAL_VcpkgEnabled true)
+set_target_properties(sqlpp-odbc2 PROPERTIES VS_GLOBAL_VcpkgTriplet x64-windows-static)
 
 install(TARGETS sqlpp-odbc2 DESTINATION lib)
