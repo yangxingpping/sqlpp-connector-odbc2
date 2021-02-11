@@ -82,9 +82,9 @@ int main()
         
 
         //select avg value current not support
-        if (const auto& row = *(db(select(avg(tab.alpha)).from(tab).unconditionally()).begin()))
+        if (const auto& row = *(db(select(avg(tab.alpha), count(tab.alpha)).from(tab).unconditionally()).begin()))
         {
-            spdlog::info("avg of alpha: {}" ,row.avg.value());
+            spdlog::info("avg of alpha: {}, count alpha:{}" ,row.avg.value(), row.count.value());
         }
 
 		//select all

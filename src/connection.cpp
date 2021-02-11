@@ -34,10 +34,50 @@
 
 #include "spdlog/spdlog.h"
 
+#include "magic_enum.hpp"
+
+#include <map>
+#include <string_view>
+
+using std::map;
+
 namespace sqlpp
 {
 	namespace odbc2
 	{
+		enum class NeeConvert
+		{
+			COUNT,
+			AVG,
+			MAX,
+			MIN,
+		};
+		constexpr auto& _needConvertNames = magic_enum::enum_names<NeeConvert>();
+		void convert_columns(std::shared_ptr<otl_stream>& os, const std::string& sql)
+		{
+			map<size_t, std::string_view> poss;
+			for(const auto& v: _needConvertNames)
+			{
+				auto pos = sql.find(v);
+				if(pos!=string::npos)
+				{
+					poss.insert({ pos, v });
+				}
+			}
+			int index = 1;
+			for(const auto& v: poss)
+			{
+				if(v.second==magic_enum::enum_name(NeeConvert::COUNT))
+				{
+					os->set_column_type(index++, otl_var_long_int);
+				}
+				else
+				{
+					os->set_column_type(index++, otl_var_double);
+				}
+			}
+		}
+
 		static connection_config _config;
         void execute_prepared_statement(detail::prepared_statement_handle_t& prepared_statement)
         {
@@ -67,6 +107,7 @@ namespace sqlpp
 			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
             std::unique_ptr<detail::result_handle> result_handle(
                 new detail::result_handle(_stream, _handle->_conf.debug));
+			convert_columns(_stream, statement);
             return { std::move(result_handle) };
 		}
 
