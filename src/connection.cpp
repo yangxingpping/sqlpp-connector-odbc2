@@ -34,10 +34,12 @@
 
 #include "spdlog/spdlog.h"
 
-#include "magic_enum.hpp"
+#include "enumMeta.h"
 
 #include <map>
-#include <string_view>
+#include <string>
+#include <memory>
+//#include <string_view>
 
 using std::map;
 
@@ -52,10 +54,10 @@ namespace sqlpp
 			MAX,
 			MIN,
 		};
-		constexpr auto& _needConvertNames = magic_enum::enum_names<NeeConvert>();
+		constexpr auto& _needConvertNames = SQLAggreationDescription;
 		void convert_columns(otl_stream* os, const std::string& sql)
 		{
-			map<size_t, std::string_view> poss;
+			map<size_t, std::string> poss;
 			for(const auto& v: _needConvertNames)
 			{
 				auto pos = sql.find(v);
@@ -67,7 +69,7 @@ namespace sqlpp
 			int index = 1;
 			for(const auto& v: poss)
 			{
-				if(v.second==magic_enum::enum_name(NeeConvert::COUNT))
+				if(v.second==SQLAggreationDescription[COUNT])
 				{
 					os->set_column_type(index++, otl_var_long_int);
 				}
@@ -104,7 +106,7 @@ namespace sqlpp
 		{
 			spdlog::info("select str:{}", statement);
 
-			auto _stream = std::make_unique<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
+			auto _stream = std::unique_ptr<otl_stream>(new otl_stream(50, statement.c_str(), _handle->_db, otl_explicit_select, ""));
 			convert_columns(_stream.get(), statement);
 			std::unique_ptr<detail::result_handle> result_handle(
                 new detail::result_handle(std::move(_stream), _handle->_conf.debug));
@@ -139,7 +141,7 @@ namespace sqlpp
 		prepared_statement_t connection::prepare_impl(const std::string& statement, size_t no_of_parameters, size_t no_of_columns)
 		{
 			spdlog::info("prepare sql:{}", statement);
-			auto _stream = std::make_unique<otl_stream>(50, statement.c_str(), _handle->_db,  otl_explicit_select, "");
+			auto _stream = std::unique_ptr<otl_stream>(new otl_stream(50, statement.c_str(), _handle->_db,  otl_explicit_select, ""));
 
 			return { std::unique_ptr<detail::prepared_statement_handle_t>(
 				new detail::prepared_statement_handle_t(std::move(_stream), no_of_parameters, no_of_columns, true)) };

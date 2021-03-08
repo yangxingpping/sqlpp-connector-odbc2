@@ -14,13 +14,13 @@ project (sqlpp11-connector-sample)
 IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 #set_property(TARGET foo PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 ELSEIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	#add_definitions(-D OTL_ODBC_UNIX)
+	add_definitions(-D OTL_ODBC_UNIX)
 	include_directories(/home/alqaz/vcpkg/installed/x64-linux/include)
 	link_libraries(odbc)
 ENDIF(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 find_package(Sqlpp11  REQUIRED)
-find_package(magic_enum REQUIRED)
+#find_package(magic_enum REQUIRED)
 
 
 set(CMAKE_CXX_STANDARD 17)

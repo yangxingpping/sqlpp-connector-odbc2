@@ -31,6 +31,7 @@
 #include "detail/prepared_statement_handle.h"
 
 #include <iso646.h>
+#include <limits.h>
 #include <string>
 
 
