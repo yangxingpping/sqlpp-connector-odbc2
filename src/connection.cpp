@@ -53,7 +53,7 @@ namespace sqlpp
 			MIN,
 		};
 		constexpr auto& _needConvertNames = magic_enum::enum_names<NeeConvert>();
-		void convert_columns(std::shared_ptr<otl_stream>& os, const std::string& sql)
+		void convert_columns(otl_stream* os, const std::string& sql)
 		{
 			map<size_t, std::string_view> poss;
 			for(const auto& v: _needConvertNames)
@@ -104,10 +104,11 @@ namespace sqlpp
 		{
 			spdlog::info("select str:{}", statement);
 
-			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
-            std::unique_ptr<detail::result_handle> result_handle(
-                new detail::result_handle(_stream, _handle->_conf.debug));
-			convert_columns(_stream, statement);
+			auto _stream = std::make_unique<otl_stream>(50, statement.c_str(), _handle->_db, otl_explicit_select, "");
+			convert_columns(_stream.get(), statement);
+			std::unique_ptr<detail::result_handle> result_handle(
+                new detail::result_handle(std::move(_stream), _handle->_conf.debug));
+			
             return { std::move(result_handle) };
 		}
 
@@ -138,10 +139,10 @@ namespace sqlpp
 		prepared_statement_t connection::prepare_impl(const std::string& statement, size_t no_of_parameters, size_t no_of_columns)
 		{
 			spdlog::info("prepare sql:{}", statement);
-			auto _stream = std::make_shared<otl_stream>(50, statement.c_str(), _handle->_db,  otl_explicit_select, "");
+			auto _stream = std::make_unique<otl_stream>(50, statement.c_str(), _handle->_db,  otl_explicit_select, "");
 
 			return { std::unique_ptr<detail::prepared_statement_handle_t>(
-				new detail::prepared_statement_handle_t(_stream, no_of_parameters, no_of_columns, true)) };
+				new detail::prepared_statement_handle_t(std::move(_stream), no_of_parameters, no_of_columns, true)) };
 		}
 
 		size_t connection::insert_impl(const std::string& statement)

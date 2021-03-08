@@ -36,7 +36,7 @@ namespace sqlpp
 	namespace odbc2
 	{
 		// FIXME
-		using ODBC2_RES = std::shared_ptr<otl_stream>;
+		using ODBC2_RES = std::unique_ptr<otl_stream>;
 
 		namespace detail
 		{
@@ -46,7 +46,7 @@ namespace sqlpp
 				bool debug;
 
 				result_handle(ODBC2_RES res, bool debug_):
-					odbc2_res(res),
+					odbc2_res(std::move(res)),
 					debug(debug_)
 				{}
 
