@@ -8,7 +8,7 @@ endif()
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-project (sqlpp11-connector-sample)
+project (sqlpp11-connector-odbc2)
 
 
 IF(CMAKE_SYSTEM_NAME MATCHES "Windows")
