@@ -47,10 +47,10 @@ namespace sqlpp
 		{
             if (!_handle)
             {
-                spdlog::error("Skeleton: Constructing char_result without valid handle");
+                spdlog::error("odbc2: Constructing char_result without valid handle");
             }
 
-		    spdlog::info("Skeleton debug: Constructing result, using handle at:{}", (void*)_handle.get());
+		    spdlog::info("odbc2 debug: Constructing result, using handle at:{}", (void*)_handle.get());
 		}
 
 		char_result_t::~char_result_t() = default;

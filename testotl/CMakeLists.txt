@@ -12,7 +12,7 @@ add_definitions(-DOTL_ODBC)
 add_executable(testotl ${DEMO_SOURCE})
 #target_link_libraries(testotl  PUBLIC sqlpp-odbc2) #PUBLIC Sqlpp11
 set_target_properties(testotl PROPERTIES VS_GLOBAL_VcpkgEnabled true)
-set_target_properties(testotl PROPERTIES VS_GLOBAL_VcpkgTriplet x64-windows-static)
+#set_target_properties(testotl PROPERTIES VS_GLOBAL_VcpkgTriplet x64-windows-static)
 
 add_test(testotl "${arg}")
 

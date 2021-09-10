@@ -27,22 +27,23 @@
 #include <sqlpp11/sqlpp11.h>
 #include <sqlpp11/ppgen.h>
 #include "sqlpp11/odbc2/odbc2.h"
+#include "demo.h"
 
 #include "spdlog/spdlog.h"
 
 #include <iostream>
 #include <vector>
 
-SQLPP_DECLARE_TABLE(
-	(tab_bar),
-    (alpha, int, SQLPP_PRIMARY_KEY)
-    (beta, varchar(255))
-    (gamma, int, SQLPP_NOT_NULL)
-    (delta, varchar(255) )
-)
+//SQLPP_DECLARE_TABLE(
+//	(tab_bar),
+//    (alpha, int, SQLPP_PRIMARY_KEY)
+//    (beta, varchar(255))
+//    (gamma, int, SQLPP_NOT_NULL)
+//    (delta, varchar(255) )
+//)
 
-SQLPP_ALIAS_PROVIDER(left);
-SQLPP_ALIAS_PROVIDER(right);
+//SQLPP_ALIAS_PROVIDER(left);
+//SQLPP_ALIAS_PROVIDER(right);
 
 namespace odbc2 = sqlpp::odbc2;
 int main()
@@ -57,7 +58,13 @@ int main()
 
         spdlog::info("connect success");
 
-		auto tab =  tab_bar::tab_bar{};
+        hhhhh::TabBar tab{};
+
+        //select all
+        /*for (const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
+        {
+            spdlog::info("alpha:{}, beta:{}, gamma:{}, delta:{}", row.alpha.value(), row.beta.value(), row.gamma.value(), row.delta.value());
+        }*/
 
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
@@ -87,17 +94,13 @@ int main()
             spdlog::info("avg of alpha: {}, count alpha:{}" ,row.avg.value(), row.count.value());
         }
 
-		//select all
-        for(const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
-        {
-            spdlog::info("alpha:{}, beta:{}, gamma:{}, delta:{}", row.alpha.value(), row.beta.value(), row.gamma.value(), row.delta.value());
-        }
+		
 
-		//select some fields
-		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
-		{
-            spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
-		}
+		////select some fields
+		//for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
+		//{
+  //          spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
+		//}
 	}
 	catch(const sqlpp::exception& )
 	{

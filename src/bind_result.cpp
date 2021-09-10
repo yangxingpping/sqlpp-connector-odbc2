@@ -43,13 +43,13 @@ namespace sqlpp
 			_handle(handle)
 		{
 			if (_handle and _handle->_debug)
-				std::cerr << "Skeleton debug: Constructing bind result, using handle at " << _handle.get() << std::endl;
+				std::cerr << "odbc2 debug: Constructing bind result, using handle at " << _handle.get() << std::endl;
 		}
 
 		void bind_result_t::_bind_boolean_result(size_t index, signed char* value, bool* is_null)
 		{
             if (_handle->_debug)
-                std::cerr << "odbc debug: binding boolean result " << *value << " at index: " << index << std::endl;
+                std::cerr << "odbc2 debug: binding boolean result " << *value << " at index: " << index << std::endl;
 
 			*(_handle->_skeleton_stmt) >> (char*)value;
 			if(_handle->_skeleton_stmt->is_null())
