@@ -26,6 +26,6 @@
 #define OTL_ODBC_UNIX
 #endif  //_WIN32
 
-#include "otl/otlv4.h"
+#include "otlv4.h"
 
 

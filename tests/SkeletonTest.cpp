@@ -86,8 +86,6 @@ int main()
             spdlog::info("row count: {}", row.count.value());
         }
 
-        
-
         //select avg value current not support
         if (const auto& row = *(db(select(avg(tab.alpha), count(tab.alpha)).from(tab).unconditionally()).begin()))
         {
