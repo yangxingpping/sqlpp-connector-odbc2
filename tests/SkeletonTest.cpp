@@ -42,15 +42,16 @@
 //    (delta, varchar(255) )
 //)
 
-//SQLPP_ALIAS_PROVIDER(left);
-//SQLPP_ALIAS_PROVIDER(right);
+SQLPP_ALIAS_PROVIDER(left);
+SQLPP_ALIAS_PROVIDER(right);
 
 namespace odbc2 = sqlpp::odbc2;
 int main()
 {
 	odbc2::connection_config config{};
- 	config.user = "";
- 	config.database = "demo_sqlite";
+ 	config.user = "postgres";
+    config.password = "123456";
+ 	config.database = "demo_postgres";
 	config.debug = true;
 	try
 	{
@@ -97,10 +98,10 @@ int main()
 		
 
 		//select some fields
-		/*for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
+		for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
 		{
             spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
-		}*/
+		}
 	}
 	catch(const sqlpp::exception& )
 	{
