@@ -132,13 +132,12 @@ namespace sqlpp
         {
             char* pnew = (char*)malloc(512);
             memset(pnew, 0, 512);
-            otl_long_string strx(5000);
-            *(_handle->odbc2_res) >> strx;
-            memcpy(pnew, strx.v, strx.len());
+            //otl_long_string strx(5000);
+            *(_handle->odbc2_res) >> pnew;
+            //memcpy(pnew, strx.v, strx.len());
             *value = pnew;
             *len = strlen(pnew);
         }
-
 	}
 }
 

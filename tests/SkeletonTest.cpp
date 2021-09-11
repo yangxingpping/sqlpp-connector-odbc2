@@ -60,11 +60,13 @@ int main()
 
         hhhhh::TabBar tab{};
 
+        
+
         //select all
-        /*for (const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
+        for (const auto& row : db(select(all_of(tab)).from(tab).unconditionally().limit(5u)))
         {
             spdlog::info("alpha:{}, beta:{}, gamma:{}, delta:{}", row.alpha.value(), row.beta.value(), row.gamma.value(), row.delta.value());
-        }*/
+        }
 
         db(insert_into(tab).set(tab.gamma = 1, tab.beta = "world3", tab.alpha = 55, tab.delta="ddd"));
 
@@ -94,11 +96,11 @@ int main()
 
 		
 
-		////select some fields
-		//for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
-		//{
-  //          spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
-		//}
+		//select some fields
+		/*for (const auto& row : db(select(multi_column(tab.alpha,tab.beta).as(left)).from(tab).unconditionally().limit(5u)))
+		{
+            spdlog::info("alpha:{}, beta:{}", row.left.alpha.value(), row.left.beta.value());
+		}*/
 	}
 	catch(const sqlpp::exception& )
 	{
