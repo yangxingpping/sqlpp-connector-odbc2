@@ -49,9 +49,9 @@ namespace odbc2 = sqlpp::odbc2;
 int main()
 {
 	odbc2::connection_config config{};
- 	config.user = "postgres";
+ 	config.user = "root";
     config.password = "123456";
- 	config.database = "demo_postgres";
+ 	config.database = "demo_mysql";
 	config.debug = true;
 	try
 	{
